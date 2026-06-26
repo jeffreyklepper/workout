@@ -573,23 +573,49 @@ function toggleEx(di, ei) {
   const prog = getProgress(currentProfile);
   const k = exKey(currentWeek, di, ei);
   prog[k] = !prog[k];
+  const day = weeks[currentWeek].days[di];
+  const allChecked = day.exercises.every((_, i) => prog[exKey(currentWeek, di, i)] === true);
+  prog[dayKey(currentWeek, di)] = allChecked;
   saveProgress(currentProfile, prog);
   updateOverall();
+  updateWeekTabDots();
+  rebuildDayCards();
   selectDay(di);
-  refreshDayCard(di);
 }
 
 function toggleDay(di) {
   const prog = getProgress(currentProfile);
   const k = dayKey(currentWeek, di);
   prog[k] = !prog[k];
-  if (prog[k]) {
-    weeks[currentWeek].days[di].exercises.forEach((_, ei) => { prog[exKey(currentWeek, di, ei)] = true; });
-  }
+  weeks[currentWeek].days[di].exercises.forEach((_, ei) => {
+    prog[exKey(currentWeek, di, ei)] = prog[k];
+  });
   saveProgress(currentProfile, prog);
   updateOverall();
+  updateWeekTabDots();
+  rebuildDayCards();
   selectDay(di);
-  refreshDayCard(di);
+}
+
+function rebuildDayCards() {
+  const prog = getProgress(currentProfile);
+  const week = weeks[currentWeek];
+  const cards = document.querySelectorAll('.day-card');
+  cards.forEach((card, di) => {
+    const day = week.days[di];
+    const isDayDone = prog[dayKey(currentWeek, di)] === true;
+    const exDone = day.exercises.filter((_, ei) => prog[exKey(currentWeek, di, ei)] === true).length;
+    card.className = 'day-card' + (card.classList.contains('selected') ? ' selected' : '') + (isDayDone ? ' completed' : '');
+    const chk = card.querySelector('.day-check');
+    if (chk) chk.style.display = isDayDone ? 'flex' : 'none';
+    let progEl = card.querySelector('.day-prog');
+    if (exDone > 0 && !isDayDone) {
+      if (!progEl) { progEl = document.createElement('div'); progEl.className = 'day-prog'; card.appendChild(progEl); }
+      progEl.textContent = `${exDone}/${day.exercises.length} exercises done`;
+    } else if (progEl) {
+      progEl.remove();
+    }
+  });
 }
 
 function resetDay(di) {
