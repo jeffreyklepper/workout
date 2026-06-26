@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Military Calisthenics — 4-Week Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --surface2: #f2f1ee;
+    --border: #e2e0da;
+    --border2: #cccac3;
+    --text: #1a1917;
+    --text2: #5c5a55;
+    --text3: #9b9891;
+    --blue-bg: #e8f0fc;
+    --blue-text: #1a4fa0;
+    --blue-border: #93b4ef;
+    --green-bg: #e4f5ec;
+    --green-text: #1a6e40;
+    --amber-bg: #fef3e2;
+    --amber-text: #7a4a0a;
+    --purple-bg: #eeebfc;
+    --purple-text: #4a3a9e;
+    --gray-bg: #efefec;
+    --gray-text: #3d3c38;
+    --coral-bg: #fdeee9;
+    --coral-text: #7a2e12;
+    --accent: #2a5fd6;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  header .logo {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  header .logo svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  header h1 { font-size: 17px; font-weight: 600; color: var(--text); }
+  header p { font-size: 13px; color: var(--text2); margin-top: 1px; }
+
+  .main { max-width: 780px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+  .week-tabs {
+    display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap;
+  }
+  .week-btn {
+    padding: 7px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    color: var(--text2);
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .week-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .week-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .week-header { margin-bottom: 1.25rem; }
+  .week-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 4px; }
+  .week-desc { font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  .day-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    user-select: none;
+  }
+  .day-card:hover { border-color: var(--border2); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .day-card.selected { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(42,95,214,0.12); }
+  .day-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .day-focus { font-size: 12px; color: var(--text2); margin-bottom: 10px; }
+
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 500;
+    padding: 2px 8px; border-radius: 20px;
+  }
+  .b-push { background: var(--blue-bg); color: var(--blue-text); }
+  .b-pull { background: var(--green-bg); color: var(--green-text); }
+  .b-legs { background: var(--amber-bg); color: var(--amber-text); }
+  .b-core { background: var(--purple-bg); color: var(--purple-text); }
+  .b-rest { background: var(--gray-bg); color: var(--gray-text); }
+  .b-full { background: var(--coral-bg); color: var(--coral-text); }
+
+  .detail-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.25rem 1rem;
+    display: none;
+  }
+  .detail-panel.visible { display: block; }
+  .detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 1rem; }
+  .detail-title { font-size: 16px; font-weight: 600; color: var(--text); }
+  .detail-sub { font-size: 13px; color: var(--text3); margin-top: 2px; }
+
+  .ex-list { list-style: none; border-top: 1px solid var(--border); }
+  .ex-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .ex-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--surface2); color: var(--text3);
+    font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .ex-name { font-weight: 500; color: var(--text); flex: 1; line-height: 1.4; }
+  .ex-sets { color: var(--text2); font-size: 13px; white-space: nowrap; }
+  .ex-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 500;
+    color: var(--blue-text);
+    text-decoration: none;
+    padding: 4px 9px;
+    border: 1px solid var(--blue-border);
+    border-radius: var(--radius-sm);
+    background: var(--blue-bg);
+    white-space: nowrap; flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+  .ex-link:hover { opacity: 0.75; }
+  .ex-link svg { width: 12px; height: 12px; fill: var(--blue-text); }
+
+  .tip-box {
+    margin-top: 1rem;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 13px; color: var(--text2); line-height: 1.6;
+  }
+  .tip-label { font-weight: 600; color: var(--text); }
+
+  .progress-bar-wrap { margin-bottom: 1.5rem; }
+  .progress-label { font-size: 12px; color: var(--text3); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .progress-track { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.4s ease; }
+
+  @media (max-width: 480px) {
+    header { padding: 1rem; }
+    .main { padding: 1rem 0.75rem 3rem; }
+    .days-grid { grid-template-columns: repeat(2, 1fr); }
+    .ex-item { flex-wrap: wrap; gap: 6px; }
+    .ex-sets { order: 3; }
+    .ex-link { order: 4; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 24 24"><path d="M6 4v16M18 4v16M6 12h12M3 8h3M18 8h3M3 16h3M18 16h3"/></svg>
+  </div>
+  <div>
+    <h1>Military Calisthenics</h1>
+    <p>4-Week Progressive Training Plan</p>
+  </div>
+</header>
+
+<div class="main">
+  <div class="progress-bar-wrap">
+    <div class="progress-label"><span id="progressLabel">Week 1 of 4</span><span id="progressPct">25%</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
+  </div>
+
+  <div class="week-tabs" id="weekTabs"></div>
+  <div class="week-header">
+    <div class="week-label" id="weekLabel"></div>
+    <div class="week-desc" id="weekDesc"></div>
+  </div>
+  <div class="days-grid" id="daysGrid"></div>
+  <div class="detail-panel" id="detailPanel"></div>
+</div>
+
+<script>
+const YT = {
+  "Push-ups": "https://www.youtube.com/watch?v=IODxDxX7oi4",
+  "Pike push-ups (shoulders)": "https://www.youtube.com/watch?v=sposDXWEB0A",
+  "Pike push-ups": "https://www.youtube.com/watch?v=sposDXWEB0A",
+  "Diamond push-ups": "https://www.youtube.com/watch?v=J0DnG1_S92I",
+  "Tricep dips (on chair)": "https://www.youtube.com/watch?v=6kALZikXxLc",
+  "Tricep dips": "https://www.youtube.com/watch?v=6kALZikXxLc",
+  "Bodyweight squats": "https://www.youtube.com/watch?v=aclHkVaku9U",
+  "Alternating lunges": "https://www.youtube.com/watch?v=QOVaHwm-Q6U",
+  "Glute bridges": "https://www.youtube.com/watch?v=wPM8icPu6H8",
+  "Plank hold": "https://www.youtube.com/watch?v=pSHjTRCQxIw",
+  "Hollow body hold": "https://www.youtube.com/watch?v=LlDNef_Ztsc",
+  "Doorframe rows (or bedsheet rows)": "https://www.youtube.com/watch?v=rloXYB8M3vU",
+  "Superman holds": "https://www.youtube.com/watch?v=cc6UVRS7PW4",
+  "Reverse snow angels (prone)": "https://www.youtube.com/watch?v=k5YKBxKMCiY",
+  "Scapular push-ups": "https://www.youtube.com/watch?v=HwT0FQHNUYU",
+  "Burpees": "https://www.youtube.com/watch?v=TU8QYVW0gDU",
+  "Mountain climbers": "https://www.youtube.com/watch?v=nmwgirgXLYM",
+  "Jump squats": "https://www.youtube.com/watch?v=CVaEhXotL7M",
+  "Plank to downdog": "https://www.youtube.com/watch?v=aWuY9TGKO0c",
+  "Crunches": "https://www.youtube.com/watch?v=Xyd_fa5zoEU",
+  "Leg raises": "https://www.youtube.com/watch?v=l4kQd9eWclE",
+  "Bicycle crunches": "https://www.youtube.com/watch?v=9FGilxCbdz8",
+  "Side plank": "https://www.youtube.com/watch?v=_6vjo5yFo1U",
+  "Dead bug": "https://www.youtube.com/watch?v=4XLEnwUr1d8",
+  "Wide push-ups": "https://www.youtube.com/watch?v=IODxDxX7oi4",
+  "Staggered push-ups": "https://www.youtube.com/watch?v=IODxDxX7oi4",
+  "Squats": "https://www.youtube.com/watch?v=aclHkVaku9U",
+  "Reverse lunges": "https://www.youtube.com/watch?v=xrPteyQLGAo",
+  "Step-ups (on chair)": "https://www.youtube.com/watch?v=dQqApCGd5Ss",
+  "Calf raises": "https://www.youtube.com/watch?v=-M4-G8p1fCI",
+  "Rows (table or bedsheet)": "https://www.youtube.com/watch?v=rloXYB8M3vU",
+  "Prone Y-T-W raises": "https://www.youtube.com/watch?v=oGLi9_yXk2E",
+  "Doorframe bicep curl hold": "https://www.youtube.com/watch?v=ykJmrZ5v0Oo",
+  "High knees": "https://www.youtube.com/watch?v=OAJ_J3EZkdY",
+  "V-ups": "https://www.youtube.com/watch?v=iP2fjvG0g3w",
+  "Russian twists": "https://www.youtube.com/watch?v=wkD8rjkodUI",
+  "Archer push-ups": "https://www.youtube.com/watch?v=tHs5_lUEkpI",
+  "Explosive push-ups": "https://www.youtube.com/watch?v=dUZFtGjCHEA",
+  "Explosive clap push-ups": "https://www.youtube.com/watch?v=dUZFtGjCHEA",
+  "Bulgarian split squats (rear foot on chair)": "https://www.youtube.com/watch?v=2C-uNgKwPLE",
+  "Bulgarian split squats": "https://www.youtube.com/watch?v=2C-uNgKwPLE",
+  "Single-leg glute bridges": "https://www.youtube.com/watch?v=SnJjEGfMkf0",
+  "Negative pull-up (if bar available)": "https://www.youtube.com/watch?v=SBivMOHuqFg",
+  "Negative pull-ups": "https://www.youtube.com/watch?v=SBivMOHuqFg",
+  "20-min AMRAP: 10 push-ups, 10 squats, 10 sit-ups, 10 mountain climbers": "https://www.youtube.com/watch?v=ml6cT4AZdqI",
+  "Push-up max test": "https://www.youtube.com/watch?v=IODxDxX7oi4",
+  "Squat max reps (2 min)": "https://www.youtube.com/watch?v=aclHkVaku9U",
+  "Plank hold max time": "https://www.youtube.com/watch?v=pSHjTRCQxIw",
+  "Plank hold max": "https://www.youtube.com/watch?v=pSHjTRCQxIw",
+  "Rows max reps": "https://www.youtube.com/watch?v=rloXYB8M3vU",
+  "Sit-up max test (2 min)": "https://www.youtube.com/watch?v=jDwoBqPH0jk",
+  "Full rest or gentle walk": null,
+  "Full rest": null,
+  "Full rest — you earned it": null,
+  "20-min brisk walk": null,
+  "25-min brisk walk": null,
+  "30-min walk or light jog": null,
+  "30-min walk or jog": null,
+  "Hip flexor stretch": "https://www.youtube.com/watch?v=bNAMJ6Gc-OI",
+  "Chest doorframe stretch": "https://www.youtube.com/watch?v=m8X7JCKrUQM",
+  "Child's pose": "https://www.youtube.com/watch?v=2MJGg-dUKh0",
+  "Full-body stretching": "https://www.youtube.com/watch?v=g_tea8r8B9E",
+  "Full-body stretch": "https://www.youtube.com/watch?v=g_tea8r8B9E",
+  "Foam roll if available": null
+};
+
+const weeks = [
+  {
+    label: "Week 1 — Foundation",
+    desc: "Learn the movement patterns and find your baseline. Focus on form over reps. Rest 90 seconds between sets.",
+    days: [
+      { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-ups", sets: "3 × 10" },{ name: "Pike push-ups (shoulders)", sets: "3 × 8" },{ name: "Diamond push-ups", sets: "2 × 8" },{ name: "Tricep dips (on chair)", sets: "3 × 10" }], tip: "Keep your core tight and elbows at 45° during push-ups — don't let them flare wide." },
+      { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Bodyweight squats", sets: "3 × 15" },{ name: "Alternating lunges", sets: "3 × 10 each" },{ name: "Glute bridges", sets: "3 × 15" },{ name: "Plank hold", sets: "3 × 20 sec" },{ name: "Hollow body hold", sets: "3 × 15 sec" }], tip: "The hollow body hold is the foundation of military core training — chin tucked, lower back pressed to floor." },
+      { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "20-min brisk walk", sets: "1 round" },{ name: "Hip flexor stretch", sets: "2 × 30 sec/side" },{ name: "Chest doorframe stretch", sets: "2 × 30 sec" },{ name: "Child's pose", sets: "2 × 30 sec" }], tip: "Active rest days improve recovery and blood flow without taxing your muscles further." },
+      { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Doorframe rows (or bedsheet rows)", sets: "3 × 10" },{ name: "Superman holds", sets: "3 × 10" },{ name: "Reverse snow angels (prone)", sets: "3 × 12" },{ name: "Scapular push-ups", sets: "3 × 12" }], tip: "If you don't have a bar, use a sturdy table edge or tie a bedsheet around a door handle for rows." },
+      { name: "Friday", focus: "Full Body", type: "full", exercises: [{ name: "Burpees", sets: "3 × 8" },{ name: "Mountain climbers", sets: "3 × 20" },{ name: "Jump squats", sets: "3 × 10" },{ name: "Push-ups", sets: "3 × 10" },{ name: "Plank to downdog", sets: "2 × 10" }], tip: "This is your conditioning day. Move through exercises with 60-second rest between sets." },
+      { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Crunches", sets: "3 × 20" },{ name: "Leg raises", sets: "3 × 10" },{ name: "Bicycle crunches", sets: "3 × 20" },{ name: "Side plank", sets: "2 × 20 sec/side" },{ name: "Dead bug", sets: "3 × 8/side" }], tip: "Dead bugs train anti-rotation stability — a military staple for protecting the lower back under load." },
+      { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest or gentle walk", sets: "—" },{ name: "Foam roll if available", sets: "10 min" }], tip: "Rest is where your muscles actually grow. Don't skip it." },
+    ]
+  },
+  {
+    label: "Week 2 — Build",
+    desc: "Increase reps and add new movements. Rest 75 seconds between sets. Your form should feel natural by now.",
+    days: [
+      { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-ups", sets: "4 × 12" },{ name: "Pike push-ups", sets: "3 × 10" },{ name: "Wide push-ups", sets: "3 × 12" },{ name: "Tricep dips", sets: "3 × 12" },{ name: "Staggered push-ups", sets: "2 × 8/side" }], tip: "Staggered push-ups shift load to one side — great for building unilateral shoulder strength." },
+      { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Squats", sets: "4 × 15" },{ name: "Reverse lunges", sets: "3 × 12 each" },{ name: "Step-ups (on chair)", sets: "3 × 12 each" },{ name: "Calf raises", sets: "3 × 20" },{ name: "Plank hold", sets: "3 × 30 sec" }], tip: "Step-ups are a military staple — they mimic loaded movement up stairs or terrain." },
+      { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "25-min brisk walk", sets: "1 round" },{ name: "Full-body stretching", sets: "15 min" }], tip: "Try a slightly longer walk this week. Aim for a pace that gets your heart rate up mildly." },
+      { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Rows (table or bedsheet)", sets: "4 × 10" },{ name: "Superman holds", sets: "3 × 12" },{ name: "Prone Y-T-W raises", sets: "2 × 10 each" },{ name: "Scapular push-ups", sets: "3 × 15" },{ name: "Doorframe bicep curl hold", sets: "3 × 12" }], tip: "Y-T-W raises target all three parts of the rear deltoid — crucial for shoulder health." },
+      { name: "Friday", focus: "Full Body / Cardio", type: "full", exercises: [{ name: "Burpees", sets: "4 × 8" },{ name: "High knees", sets: "3 × 30 sec" },{ name: "Jump squats", sets: "3 × 12" },{ name: "Push-ups", sets: "3 × 12" },{ name: "Mountain climbers", sets: "3 × 20" }], tip: "Try doing this as a circuit with minimal rest to get your heart rate up." },
+      { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Leg raises", sets: "3 × 12" },{ name: "Bicycle crunches", sets: "3 × 25" },{ name: "Side plank", sets: "3 × 25 sec/side" },{ name: "Hollow body hold", sets: "3 × 20 sec" },{ name: "V-ups", sets: "3 × 10" }], tip: "V-ups are a harder hollow body variation — if too tough, do tuck-ups instead." },
+      { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest", sets: "—" }], tip: "Two weeks down. Your body is adapting — you should start to feel stronger." },
+    ]
+  },
+  {
+    label: "Week 3 — Intensity",
+    desc: "Higher volume and timed circuits this week. Rest drops to 60 seconds. Expect to feel challenged.",
+    days: [
+      { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-ups", sets: "4 × 15" },{ name: "Pike push-ups", sets: "4 × 12" },{ name: "Archer push-ups", sets: "3 × 6/side" },{ name: "Tricep dips", sets: "4 × 12" },{ name: "Explosive push-ups", sets: "3 × 6" }], tip: "Archer push-ups shift most of the load to one arm — a big step toward one-arm push-ups." },
+      { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Jump squats", sets: "4 × 12" },{ name: "Bulgarian split squats (rear foot on chair)", sets: "3 × 10 each" },{ name: "Single-leg glute bridges", sets: "3 × 12 each" },{ name: "Plank hold", sets: "3 × 45 sec" },{ name: "Leg raises", sets: "3 × 15" }], tip: "Bulgarian split squats are brutal — start slow and hold something for balance if needed." },
+      { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "30-min walk or light jog", sets: "1 round" },{ name: "Full-body stretching", sets: "15 min" }], tip: "If you're feeling strong, try alternating 1 min jog / 1 min walk for your 30 minutes." },
+      { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Rows (table or bedsheet)", sets: "4 × 12" },{ name: "Superman holds", sets: "4 × 12" },{ name: "Prone Y-T-W raises", sets: "3 × 12 each" },{ name: "Negative pull-up (if bar available)", sets: "3 × 5 slow" }], tip: "Negative pull-ups: jump up to the top position and lower yourself as slowly as possible." },
+      { name: "Friday", focus: "AMRAP Circuit", type: "full", exercises: [{ name: "20-min AMRAP: 10 push-ups, 10 squats, 10 sit-ups, 10 mountain climbers", sets: "As many rounds as possible" }], tip: "AMRAP = As Many Rounds As Possible. Track your rounds — it's your benchmark to beat next week." },
+      { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Hollow body hold", sets: "3 × 30 sec" },{ name: "V-ups", sets: "3 × 15" },{ name: "Side plank", sets: "3 × 35 sec/side" },{ name: "Russian twists", sets: "3 × 20" },{ name: "Dead bug", sets: "3 × 10/side" }], tip: "Russian twists: if too easy, slow them down and pause at each side instead of going heavier." },
+      { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest", sets: "—" }], tip: "Three weeks in. The AMRAP score you set Friday is your fitness baseline." },
+    ]
+  },
+  {
+    label: "Week 4 — Peak",
+    desc: "Maximum effort week. Push for personal bests. Rest 45–60 seconds. Finish strong.",
+    days: [
+      { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-up max test", sets: "1 × max reps" },{ name: "Pike push-ups", sets: "4 × 15" },{ name: "Archer push-ups", sets: "3 × 8/side" },{ name: "Explosive clap push-ups", sets: "3 × 5" },{ name: "Tricep dips", sets: "4 × 15" }], tip: "Start with a max push-up test — this is your Week 1 vs Week 4 comparison. Write it down." },
+      { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Squat max reps (2 min)", sets: "1 × timed" },{ name: "Bulgarian split squats", sets: "4 × 12 each" },{ name: "Single-leg glute bridges", sets: "4 × 15 each" },{ name: "Calf raises", sets: "3 × 25" },{ name: "Plank hold max time", sets: "1 × max" }], tip: "Test your plank max — you'll be surprised how much it improved from Week 1." },
+      { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "30-min walk or jog", sets: "1 round" },{ name: "Full-body stretch", sets: "20 min" }], tip: "Extra stretch time today — your body needs it before the final push of the week." },
+      { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Rows max reps", sets: "1 × max" },{ name: "Superman holds", sets: "4 × 15" },{ name: "Prone Y-T-W raises", sets: "3 × 15 each" },{ name: "Negative pull-ups", sets: "3 × 6 slow" }], tip: "Hit a row max rep test just like Monday's push-up test." },
+      { name: "Friday", focus: "AMRAP Retest", type: "full", exercises: [{ name: "20-min AMRAP: 10 push-ups, 10 squats, 10 sit-ups, 10 mountain climbers", sets: "Beat your Week 3 score" }], tip: "Retest the exact same AMRAP from Week 3. Most people improve by 2–4 rounds in just one week." },
+      { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Sit-up max test (2 min)", sets: "1 × timed" },{ name: "Plank hold max", sets: "1 × max" },{ name: "V-ups", sets: "3 × 15" },{ name: "Dead bug", sets: "3 × 12/side" },{ name: "Side plank", sets: "3 × 45 sec/side" }], tip: "The 2-min sit-up test is the official US Army ACFT benchmark. Log your score." },
+      { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest — you earned it", sets: "—" }], tip: "Month complete. Compare your max tests from Week 4 to your starting performance." },
+    ]
+  }
+];
+
+const badgeClass = { push:'b-push', pull:'b-pull', legs:'b-legs', core:'b-core', rest:'b-rest', full:'b-full' };
+const badgeLabel = { push:'Push', pull:'Pull', legs:'Legs/Core', core:'Core', rest:'Rest', full:'Full Body' };
+
+let currentWeek = 0;
+
+function getLink(name) {
+  if (YT[name] !== undefined) return YT[name];
+  const key = Object.keys(YT).find(k => k && name.toLowerCase().startsWith(k.toLowerCase().split(' ').slice(0,2).join(' ')));
+  return key ? YT[key] : null;
+}
+
+function renderWeek(idx) {
+  currentWeek = idx;
+  const week = weeks[idx];
+  document.getElementById('weekLabel').textContent = week.label;
+  document.getElementById('weekDesc').textContent = week.desc;
+  document.querySelectorAll('.week-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  const pct = Math.round(((idx+1)/4)*100);
+  document.getElementById('progressLabel').textContent = `Week ${idx+1} of 4`;
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  const grid = document.getElementById('daysGrid');
+  grid.innerHTML = '';
+  week.days.forEach((day, di) => {
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    card.innerHTML = `<div class="day-name">${day.name}</div><div class="day-focus">${day.focus}</div><span class="badge ${badgeClass[day.type]||'b-rest'}">${badgeLabel[day.type]||day.type}</span>`;
+    card.onclick = () => selectDay(di);
+    grid.appendChild(card);
+  });
+  const panel = document.getElementById('detailPanel');
+  panel.classList.remove('visible');
+}
+
+function selectDay(di) {
+  const day = weeks[currentWeek].days[di];
+  document.querySelectorAll('.day-card').forEach((c,i) => c.classList.toggle('selected', i===di));
+
+  const exHTML = day.exercises.map((e, i) => {
+    const url = getLink(e.name);
+    const linkHTML = url
+      ? `<a class="ex-link" href="${url}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg> how-to</a>`
+      : '';
+    return `<li class="ex-item"><span class="ex-num">${i+1}</span><span class="ex-name">${e.name}</span><span class="ex-sets">${e.sets}</span>${linkHTML}</li>`;
+  }).join('');
+
+  const panel = document.getElementById('detailPanel');
+  panel.innerHTML = `
+    <div class="detail-head">
+      <div><div class="detail-title">${day.name} — ${day.focus}</div><div class="detail-sub">${weeks[currentWeek].label}</div></div>
+      <span class="badge ${badgeClass[day.type]||'b-rest'}">${badgeLabel[day.type]||day.type}</span>
+    </div>
+    <ul class="ex-list">${exHTML}</ul>
+    <div class="tip-box"><span class="tip-label">Tip: </span>${day.tip}</div>
+  `;
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+const tabs = document.getElementById('weekTabs');
+weeks.forEach((w,i) => {
+  const btn = document.createElement('button');
+  btn.className = 'week-btn' + (i===0?' active':'');
+  btn.textContent = `Week ${i+1}`;
+  btn.onclick = () => renderWeek(i);
+  tabs.appendChild(btn);
+});
+renderWeek(0);
+</script>
+</body>
+</html>
