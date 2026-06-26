@@ -7,108 +7,146 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #f8f7f4;
-    --surface: #ffffff;
-    --surface2: #f2f1ee;
-    --border: #e2e0da;
-    --border2: #cccac3;
-    --text: #1a1917;
-    --text2: #5c5a55;
-    --text3: #9b9891;
-    --blue-bg: #e8f0fc;
-    --blue-text: #1a4fa0;
-    --blue-border: #93b4ef;
-    --green-bg: #e4f5ec;
-    --green-text: #1a6e40;
-    --amber-bg: #fef3e2;
-    --amber-text: #7a4a0a;
-    --purple-bg: #eeebfc;
-    --purple-text: #4a3a9e;
-    --gray-bg: #efefec;
-    --gray-text: #3d3c38;
-    --coral-bg: #fdeee9;
-    --coral-text: #7a2e12;
-    --accent: #2a5fd6;
-    --radius: 10px;
-    --radius-sm: 6px;
+    --bg: #f8f7f4; --surface: #ffffff; --surface2: #f2f1ee;
+    --border: #e2e0da; --border2: #cccac3;
+    --text: #1a1917; --text2: #5c5a55; --text3: #9b9891;
+    --blue-bg: #e8f0fc; --blue-text: #1a4fa0; --blue-border: #93b4ef;
+    --green-bg: #e4f5ec; --green-text: #1a6e40;
+    --amber-bg: #fef3e2; --amber-text: #7a4a0a;
+    --purple-bg: #eeebfc; --purple-text: #4a3a9e;
+    --gray-bg: #efefec; --gray-text: #3d3c38;
+    --coral-bg: #fdeee9; --coral-text: #7a2e12;
+    --accent: #2a5fd6; --accent-light: #e8f0fc;
+    --green-check: #1a6e40; --green-check-bg: #e4f5ec;
+    --radius: 10px; --radius-sm: 6px;
   }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 0;
+  /* PROFILE SCREEN */
+  #profileScreen {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 2rem 1rem;
   }
-
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  .profile-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem; width: 100%; max-width: 380px;
   }
-  header .logo {
-    width: 36px; height: 36px;
-    background: var(--accent);
-    border-radius: 8px;
+  .profile-box h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .profile-box p { font-size: 14px; color: var(--text2); margin-bottom: 1.5rem; }
+  .profile-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.25rem; }
+  .profile-btn {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--surface2);
+    cursor: pointer; font-family: inherit; font-size: 14px;
+    font-weight: 500; color: var(--text); transition: all 0.15s; text-align: left;
+  }
+  .profile-btn:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+  .profile-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    font-size: 14px; font-weight: 600; flex-shrink: 0;
   }
-  header .logo svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  header h1 { font-size: 17px; font-weight: 600; color: var(--text); }
-  header p { font-size: 13px; color: var(--text2); margin-top: 1px; }
+  .profile-meta { font-size: 12px; color: var(--text3); font-weight: 400; margin-top: 1px; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+  .add-profile { display: flex; gap: 8px; }
+  .add-profile input {
+    flex: 1; padding: 9px 12px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); font-family: inherit; font-size: 14px;
+    background: var(--surface); color: var(--text); outline: none;
+  }
+  .add-profile input:focus { border-color: var(--accent); }
+  .btn-primary {
+    padding: 9px 16px; border-radius: var(--radius-sm);
+    background: var(--accent); color: #fff; border: none;
+    font-family: inherit; font-size: 14px; font-weight: 500;
+    cursor: pointer; white-space: nowrap;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+
+  /* MAIN APP */
+  #appScreen { display: none; }
+  header {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 1rem 1.25rem; display: flex; align-items: center; gap: 12px;
+  }
+  .header-logo {
+    width: 34px; height: 34px; background: var(--accent); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .header-logo svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .header-info { flex: 1; }
+  .header-info h1 { font-size: 15px; font-weight: 600; }
+  .header-info p { font-size: 12px; color: var(--text2); }
+  .user-pill {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 10px; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--surface2);
+    cursor: pointer; font-family: inherit; font-size: 13px;
+    font-weight: 500; color: var(--text2);
+  }
+  .user-pill:hover { border-color: var(--border2); }
+  .user-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; flex-shrink: 0; }
 
   .main { max-width: 780px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 
-  .week-tabs {
-    display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap;
+  /* OVERALL PROGRESS */
+  .overall-progress {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.1rem 1.25rem; margin-bottom: 1.25rem;
   }
+  .op-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .op-label { font-size: 13px; font-weight: 500; color: var(--text); }
+  .op-pct { font-size: 22px; font-weight: 600; color: var(--accent); }
+  .op-track { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+  .op-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.5s ease; }
+  .op-stats { display: flex; gap: 16px; }
+  .op-stat { font-size: 12px; color: var(--text3); }
+  .op-stat span { color: var(--text2); font-weight: 500; }
+
+  .week-tabs { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
   .week-btn {
-    padding: 7px 16px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border2);
-    background: var(--surface);
-    color: var(--text2);
-    font-size: 13px; font-weight: 500;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.15s;
+    padding: 7px 16px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border2); background: var(--surface);
+    color: var(--text2); font-size: 13px; font-weight: 500;
+    cursor: pointer; font-family: inherit; transition: all 0.15s; position: relative;
   }
   .week-btn:hover { border-color: var(--accent); color: var(--accent); }
   .week-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .week-done-dot {
+    position: absolute; top: -4px; right: -4px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--green-text); border: 2px solid var(--bg);
+    display: none;
+  }
+  .week-btn.has-progress .week-done-dot { display: block; }
 
   .week-header { margin-bottom: 1.25rem; }
   .week-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 4px; }
   .week-desc { font-size: 14px; color: var(--text2); line-height: 1.6; }
 
-  .days-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 10px;
-    margin-bottom: 1.25rem;
-  }
+  .days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
   .day-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1rem;
-    cursor: pointer;
-    transition: border-color 0.15s, box-shadow 0.15s;
-    user-select: none;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem; cursor: pointer;
+    transition: border-color 0.15s; position: relative;
   }
-  .day-card:hover { border-color: var(--border2); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .day-card:hover { border-color: var(--border2); }
   .day-card.selected { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(42,95,214,0.12); }
-  .day-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-  .day-focus { font-size: 12px; color: var(--text2); margin-bottom: 10px; }
-
-  .badge {
-    display: inline-block; font-size: 11px; font-weight: 500;
-    padding: 2px 8px; border-radius: 20px;
+  .day-card.completed { border-color: #6cc08a; background: #f5fbf7; }
+  .day-check {
+    position: absolute; top: 10px; right: 10px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--green-check-bg); display: none;
+    align-items: center; justify-content: center;
   }
+  .day-check svg { width: 11px; height: 11px; stroke: var(--green-check); stroke-width: 2.5; fill: none; }
+  .day-card.completed .day-check { display: flex; }
+  .day-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; padding-right: 24px; }
+  .day-focus { font-size: 12px; color: var(--text2); margin-bottom: 10px; }
+  .day-prog { font-size: 11px; color: var(--text3); margin-top: 6px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
   .b-push { background: var(--blue-bg); color: var(--blue-text); }
   .b-pull { background: var(--green-bg); color: var(--green-text); }
   .b-legs { background: var(--amber-bg); color: var(--amber-text); }
@@ -117,65 +155,62 @@
   .b-full { background: var(--coral-bg); color: var(--coral-text); }
 
   .detail-panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem 1.25rem 1rem;
-    display: none;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem; display: none;
   }
   .detail-panel.visible { display: block; }
   .detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 1rem; }
   .detail-title { font-size: 16px; font-weight: 600; color: var(--text); }
   .detail-sub { font-size: 13px; color: var(--text3); margin-top: 2px; }
+  .mark-day-btn {
+    padding: 7px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border2); background: var(--surface2);
+    font-family: inherit; font-size: 13px; font-weight: 500;
+    color: var(--text2); cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .mark-day-btn.done { background: var(--green-check-bg); color: var(--green-check); border-color: #6cc08a; }
 
   .ex-list { list-style: none; border-top: 1px solid var(--border); }
   .ex-item {
     display: flex; align-items: center; gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
+    padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px;
   }
-  .ex-num {
-    width: 22px; height: 22px; border-radius: 50%;
-    background: var(--surface2); color: var(--text3);
-    font-size: 11px; font-weight: 600;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+  .ex-check-btn {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    border: 1.5px solid var(--border2); background: var(--surface);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
   }
+  .ex-check-btn svg { width: 11px; height: 11px; stroke: #fff; stroke-width: 2.5; fill: none; display: none; }
+  .ex-check-btn.checked { background: var(--green-check); border-color: var(--green-check); }
+  .ex-check-btn.checked svg { display: block; }
   .ex-name { font-weight: 500; color: var(--text); flex: 1; line-height: 1.4; }
+  .ex-name.done-ex { text-decoration: line-through; color: var(--text3); }
   .ex-sets { color: var(--text2); font-size: 13px; white-space: nowrap; }
   .ex-link {
     display: inline-flex; align-items: center; gap: 4px;
-    font-size: 12px; font-weight: 500;
-    color: var(--blue-text);
-    text-decoration: none;
-    padding: 4px 9px;
-    border: 1px solid var(--blue-border);
-    border-radius: var(--radius-sm);
-    background: var(--blue-bg);
-    white-space: nowrap; flex-shrink: 0;
-    transition: opacity 0.15s;
+    font-size: 12px; font-weight: 500; color: var(--blue-text);
+    text-decoration: none; padding: 4px 9px;
+    border: 1px solid var(--blue-border); border-radius: var(--radius-sm);
+    background: var(--blue-bg); white-space: nowrap; flex-shrink: 0; transition: opacity 0.15s;
   }
   .ex-link:hover { opacity: 0.75; }
   .ex-link svg { width: 12px; height: 12px; fill: var(--blue-text); }
 
   .tip-box {
-    margin-top: 1rem;
-    padding: 10px 14px;
-    background: var(--surface2);
-    border-left: 3px solid var(--accent);
+    margin-top: 1rem; padding: 10px 14px;
+    background: var(--surface2); border-left: 3px solid var(--accent);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     font-size: 13px; color: var(--text2); line-height: 1.6;
   }
   .tip-label { font-weight: 600; color: var(--text); }
 
-  .progress-bar-wrap { margin-bottom: 1.5rem; }
-  .progress-label { font-size: 12px; color: var(--text3); margin-bottom: 6px; display: flex; justify-content: space-between; }
-  .progress-track { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.4s ease; }
+  .reset-link { font-size: 12px; color: var(--text3); text-decoration: underline; cursor: pointer; margin-top: 8px; display: inline-block; }
+  .reset-link:hover { color: #c0392b; }
 
   @media (max-width: 480px) {
-    header { padding: 1rem; }
+    header { padding: 0.875rem 1rem; }
     .main { padding: 1rem 0.75rem 3rem; }
     .days-grid { grid-template-columns: repeat(2, 1fr); }
     .ex-item { flex-wrap: wrap; gap: 6px; }
@@ -186,32 +221,69 @@
 </head>
 <body>
 
-<header>
-  <div class="logo">
-    <svg viewBox="0 0 24 24"><path d="M6 4v16M18 4v16M6 12h12M3 8h3M18 8h3M3 16h3M18 16h3"/></svg>
+<!-- PROFILE SELECTION SCREEN -->
+<div id="profileScreen">
+  <div class="profile-box">
+    <h2>Who's training today?</h2>
+    <p>Select your profile to load your progress.</p>
+    <div class="profile-list" id="profileList"></div>
+    <hr class="divider">
+    <div class="add-profile">
+      <input type="text" id="newProfileName" placeholder="Add a new name..." maxlength="20">
+      <button class="btn-primary" onclick="addProfile()">Add</button>
+    </div>
   </div>
-  <div>
-    <h1>Military Calisthenics</h1>
-    <p>4-Week Progressive Training Plan</p>
-  </div>
-</header>
+</div>
 
-<div class="main">
-  <div class="progress-bar-wrap">
-    <div class="progress-label"><span id="progressLabel">Week 1 of 4</span><span id="progressPct">25%</span></div>
-    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
-  </div>
+<!-- MAIN APP SCREEN -->
+<div id="appScreen">
+  <header>
+    <div class="header-logo">
+      <svg viewBox="0 0 24 24"><path d="M6 4v16M18 4v16M6 12h12M3 8h3M18 8h3M3 16h3M18 16h3"/></svg>
+    </div>
+    <div class="header-info">
+      <h1>Military Calisthenics</h1>
+      <p>4-Week Progressive Plan</p>
+    </div>
+    <button class="user-pill" onclick="switchProfile()" id="userPill">
+      <div class="user-dot" id="userDot"></div>
+      <span id="userPillName"></span>
+    </button>
+  </header>
 
-  <div class="week-tabs" id="weekTabs"></div>
-  <div class="week-header">
-    <div class="week-label" id="weekLabel"></div>
-    <div class="week-desc" id="weekDesc"></div>
+  <div class="main">
+    <div class="overall-progress">
+      <div class="op-top">
+        <div class="op-label">Overall progress</div>
+        <div class="op-pct" id="overallPct">0%</div>
+      </div>
+      <div class="op-track"><div class="op-fill" id="overallFill" style="width:0%"></div></div>
+      <div class="op-stats">
+        <div class="op-stat">Days completed: <span id="statDays">0</span> / 28</div>
+        <div class="op-stat">Exercises checked: <span id="statEx">0</span></div>
+      </div>
+    </div>
+
+    <div class="week-tabs" id="weekTabs"></div>
+    <div class="week-header">
+      <div class="week-label" id="weekLabel"></div>
+      <div class="week-desc" id="weekDesc"></div>
+    </div>
+    <div class="days-grid" id="daysGrid"></div>
+    <div class="detail-panel" id="detailPanel"></div>
   </div>
-  <div class="days-grid" id="daysGrid"></div>
-  <div class="detail-panel" id="detailPanel"></div>
 </div>
 
 <script>
+const AVATAR_COLORS = [
+  { bg: '#e8f0fc', text: '#1a4fa0' },
+  { bg: '#e4f5ec', text: '#1a6e40' },
+  { bg: '#fdeee9', text: '#7a2e12' },
+  { bg: '#eeebfc', text: '#4a3a9e' },
+  { bg: '#fef3e2', text: '#7a4a0a' },
+  { bg: '#fbeaf1', text: '#7a1a45' },
+];
+
 const YT = {
   "Push-ups": "https://www.youtube.com/watch?v=IODxDxX7oi4",
   "Pike push-ups (shoulders)": "https://www.youtube.com/watch?v=sposDXWEB0A",
@@ -264,145 +336,310 @@ const YT = {
   "Plank hold max": "https://www.youtube.com/watch?v=pSHjTRCQxIw",
   "Rows max reps": "https://www.youtube.com/watch?v=rloXYB8M3vU",
   "Sit-up max test (2 min)": "https://www.youtube.com/watch?v=jDwoBqPH0jk",
-  "Full rest or gentle walk": null,
-  "Full rest": null,
-  "Full rest — you earned it": null,
-  "20-min brisk walk": null,
-  "25-min brisk walk": null,
-  "30-min walk or light jog": null,
-  "30-min walk or jog": null,
   "Hip flexor stretch": "https://www.youtube.com/watch?v=bNAMJ6Gc-OI",
   "Chest doorframe stretch": "https://www.youtube.com/watch?v=m8X7JCKrUQM",
   "Child's pose": "https://www.youtube.com/watch?v=2MJGg-dUKh0",
   "Full-body stretching": "https://www.youtube.com/watch?v=g_tea8r8B9E",
   "Full-body stretch": "https://www.youtube.com/watch?v=g_tea8r8B9E",
-  "Foam roll if available": null
 };
 
 const weeks = [
-  {
-    label: "Week 1 — Foundation",
-    desc: "Learn the movement patterns and find your baseline. Focus on form over reps. Rest 90 seconds between sets.",
-    days: [
-      { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-ups", sets: "3 × 10" },{ name: "Pike push-ups (shoulders)", sets: "3 × 8" },{ name: "Diamond push-ups", sets: "2 × 8" },{ name: "Tricep dips (on chair)", sets: "3 × 10" }], tip: "Keep your core tight and elbows at 45° during push-ups — don't let them flare wide." },
-      { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Bodyweight squats", sets: "3 × 15" },{ name: "Alternating lunges", sets: "3 × 10 each" },{ name: "Glute bridges", sets: "3 × 15" },{ name: "Plank hold", sets: "3 × 20 sec" },{ name: "Hollow body hold", sets: "3 × 15 sec" }], tip: "The hollow body hold is the foundation of military core training — chin tucked, lower back pressed to floor." },
-      { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "20-min brisk walk", sets: "1 round" },{ name: "Hip flexor stretch", sets: "2 × 30 sec/side" },{ name: "Chest doorframe stretch", sets: "2 × 30 sec" },{ name: "Child's pose", sets: "2 × 30 sec" }], tip: "Active rest days improve recovery and blood flow without taxing your muscles further." },
-      { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Doorframe rows (or bedsheet rows)", sets: "3 × 10" },{ name: "Superman holds", sets: "3 × 10" },{ name: "Reverse snow angels (prone)", sets: "3 × 12" },{ name: "Scapular push-ups", sets: "3 × 12" }], tip: "If you don't have a bar, use a sturdy table edge or tie a bedsheet around a door handle for rows." },
-      { name: "Friday", focus: "Full Body", type: "full", exercises: [{ name: "Burpees", sets: "3 × 8" },{ name: "Mountain climbers", sets: "3 × 20" },{ name: "Jump squats", sets: "3 × 10" },{ name: "Push-ups", sets: "3 × 10" },{ name: "Plank to downdog", sets: "2 × 10" }], tip: "This is your conditioning day. Move through exercises with 60-second rest between sets." },
-      { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Crunches", sets: "3 × 20" },{ name: "Leg raises", sets: "3 × 10" },{ name: "Bicycle crunches", sets: "3 × 20" },{ name: "Side plank", sets: "2 × 20 sec/side" },{ name: "Dead bug", sets: "3 × 8/side" }], tip: "Dead bugs train anti-rotation stability — a military staple for protecting the lower back under load." },
-      { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest or gentle walk", sets: "—" },{ name: "Foam roll if available", sets: "10 min" }], tip: "Rest is where your muscles actually grow. Don't skip it." },
-    ]
-  },
-  {
-    label: "Week 2 — Build",
-    desc: "Increase reps and add new movements. Rest 75 seconds between sets. Your form should feel natural by now.",
-    days: [
-      { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-ups", sets: "4 × 12" },{ name: "Pike push-ups", sets: "3 × 10" },{ name: "Wide push-ups", sets: "3 × 12" },{ name: "Tricep dips", sets: "3 × 12" },{ name: "Staggered push-ups", sets: "2 × 8/side" }], tip: "Staggered push-ups shift load to one side — great for building unilateral shoulder strength." },
-      { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Squats", sets: "4 × 15" },{ name: "Reverse lunges", sets: "3 × 12 each" },{ name: "Step-ups (on chair)", sets: "3 × 12 each" },{ name: "Calf raises", sets: "3 × 20" },{ name: "Plank hold", sets: "3 × 30 sec" }], tip: "Step-ups are a military staple — they mimic loaded movement up stairs or terrain." },
-      { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "25-min brisk walk", sets: "1 round" },{ name: "Full-body stretching", sets: "15 min" }], tip: "Try a slightly longer walk this week. Aim for a pace that gets your heart rate up mildly." },
-      { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Rows (table or bedsheet)", sets: "4 × 10" },{ name: "Superman holds", sets: "3 × 12" },{ name: "Prone Y-T-W raises", sets: "2 × 10 each" },{ name: "Scapular push-ups", sets: "3 × 15" },{ name: "Doorframe bicep curl hold", sets: "3 × 12" }], tip: "Y-T-W raises target all three parts of the rear deltoid — crucial for shoulder health." },
-      { name: "Friday", focus: "Full Body / Cardio", type: "full", exercises: [{ name: "Burpees", sets: "4 × 8" },{ name: "High knees", sets: "3 × 30 sec" },{ name: "Jump squats", sets: "3 × 12" },{ name: "Push-ups", sets: "3 × 12" },{ name: "Mountain climbers", sets: "3 × 20" }], tip: "Try doing this as a circuit with minimal rest to get your heart rate up." },
-      { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Leg raises", sets: "3 × 12" },{ name: "Bicycle crunches", sets: "3 × 25" },{ name: "Side plank", sets: "3 × 25 sec/side" },{ name: "Hollow body hold", sets: "3 × 20 sec" },{ name: "V-ups", sets: "3 × 10" }], tip: "V-ups are a harder hollow body variation — if too tough, do tuck-ups instead." },
-      { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest", sets: "—" }], tip: "Two weeks down. Your body is adapting — you should start to feel stronger." },
-    ]
-  },
-  {
-    label: "Week 3 — Intensity",
-    desc: "Higher volume and timed circuits this week. Rest drops to 60 seconds. Expect to feel challenged.",
-    days: [
-      { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-ups", sets: "4 × 15" },{ name: "Pike push-ups", sets: "4 × 12" },{ name: "Archer push-ups", sets: "3 × 6/side" },{ name: "Tricep dips", sets: "4 × 12" },{ name: "Explosive push-ups", sets: "3 × 6" }], tip: "Archer push-ups shift most of the load to one arm — a big step toward one-arm push-ups." },
-      { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Jump squats", sets: "4 × 12" },{ name: "Bulgarian split squats (rear foot on chair)", sets: "3 × 10 each" },{ name: "Single-leg glute bridges", sets: "3 × 12 each" },{ name: "Plank hold", sets: "3 × 45 sec" },{ name: "Leg raises", sets: "3 × 15" }], tip: "Bulgarian split squats are brutal — start slow and hold something for balance if needed." },
-      { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "30-min walk or light jog", sets: "1 round" },{ name: "Full-body stretching", sets: "15 min" }], tip: "If you're feeling strong, try alternating 1 min jog / 1 min walk for your 30 minutes." },
-      { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Rows (table or bedsheet)", sets: "4 × 12" },{ name: "Superman holds", sets: "4 × 12" },{ name: "Prone Y-T-W raises", sets: "3 × 12 each" },{ name: "Negative pull-up (if bar available)", sets: "3 × 5 slow" }], tip: "Negative pull-ups: jump up to the top position and lower yourself as slowly as possible." },
-      { name: "Friday", focus: "AMRAP Circuit", type: "full", exercises: [{ name: "20-min AMRAP: 10 push-ups, 10 squats, 10 sit-ups, 10 mountain climbers", sets: "As many rounds as possible" }], tip: "AMRAP = As Many Rounds As Possible. Track your rounds — it's your benchmark to beat next week." },
-      { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Hollow body hold", sets: "3 × 30 sec" },{ name: "V-ups", sets: "3 × 15" },{ name: "Side plank", sets: "3 × 35 sec/side" },{ name: "Russian twists", sets: "3 × 20" },{ name: "Dead bug", sets: "3 × 10/side" }], tip: "Russian twists: if too easy, slow them down and pause at each side instead of going heavier." },
-      { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest", sets: "—" }], tip: "Three weeks in. The AMRAP score you set Friday is your fitness baseline." },
-    ]
-  },
-  {
-    label: "Week 4 — Peak",
-    desc: "Maximum effort week. Push for personal bests. Rest 45–60 seconds. Finish strong.",
-    days: [
-      { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-up max test", sets: "1 × max reps" },{ name: "Pike push-ups", sets: "4 × 15" },{ name: "Archer push-ups", sets: "3 × 8/side" },{ name: "Explosive clap push-ups", sets: "3 × 5" },{ name: "Tricep dips", sets: "4 × 15" }], tip: "Start with a max push-up test — this is your Week 1 vs Week 4 comparison. Write it down." },
-      { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Squat max reps (2 min)", sets: "1 × timed" },{ name: "Bulgarian split squats", sets: "4 × 12 each" },{ name: "Single-leg glute bridges", sets: "4 × 15 each" },{ name: "Calf raises", sets: "3 × 25" },{ name: "Plank hold max time", sets: "1 × max" }], tip: "Test your plank max — you'll be surprised how much it improved from Week 1." },
-      { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "30-min walk or jog", sets: "1 round" },{ name: "Full-body stretch", sets: "20 min" }], tip: "Extra stretch time today — your body needs it before the final push of the week." },
-      { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Rows max reps", sets: "1 × max" },{ name: "Superman holds", sets: "4 × 15" },{ name: "Prone Y-T-W raises", sets: "3 × 15 each" },{ name: "Negative pull-ups", sets: "3 × 6 slow" }], tip: "Hit a row max rep test just like Monday's push-up test." },
-      { name: "Friday", focus: "AMRAP Retest", type: "full", exercises: [{ name: "20-min AMRAP: 10 push-ups, 10 squats, 10 sit-ups, 10 mountain climbers", sets: "Beat your Week 3 score" }], tip: "Retest the exact same AMRAP from Week 3. Most people improve by 2–4 rounds in just one week." },
-      { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Sit-up max test (2 min)", sets: "1 × timed" },{ name: "Plank hold max", sets: "1 × max" },{ name: "V-ups", sets: "3 × 15" },{ name: "Dead bug", sets: "3 × 12/side" },{ name: "Side plank", sets: "3 × 45 sec/side" }], tip: "The 2-min sit-up test is the official US Army ACFT benchmark. Log your score." },
-      { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest — you earned it", sets: "—" }], tip: "Month complete. Compare your max tests from Week 4 to your starting performance." },
-    ]
-  }
+  { label: "Week 1 — Foundation", desc: "Learn the movement patterns and find your baseline. Focus on form over reps. Rest 90 seconds between sets.", days: [
+    { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-ups", sets: "3 × 10" },{ name: "Pike push-ups (shoulders)", sets: "3 × 8" },{ name: "Diamond push-ups", sets: "2 × 8" },{ name: "Tricep dips (on chair)", sets: "3 × 10" }], tip: "Keep your core tight and elbows at 45° during push-ups — don't let them flare wide." },
+    { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Bodyweight squats", sets: "3 × 15" },{ name: "Alternating lunges", sets: "3 × 10 each" },{ name: "Glute bridges", sets: "3 × 15" },{ name: "Plank hold", sets: "3 × 20 sec" },{ name: "Hollow body hold", sets: "3 × 15 sec" }], tip: "The hollow body hold is the foundation of military core training — chin tucked, lower back pressed to floor." },
+    { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "20-min brisk walk", sets: "1 round" },{ name: "Hip flexor stretch", sets: "2 × 30 sec/side" },{ name: "Chest doorframe stretch", sets: "2 × 30 sec" },{ name: "Child's pose", sets: "2 × 30 sec" }], tip: "Active rest days improve recovery and blood flow without taxing your muscles further." },
+    { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Doorframe rows (or bedsheet rows)", sets: "3 × 10" },{ name: "Superman holds", sets: "3 × 10" },{ name: "Reverse snow angels (prone)", sets: "3 × 12" },{ name: "Scapular push-ups", sets: "3 × 12" }], tip: "If you don't have a bar, use a sturdy table edge or tie a bedsheet around a door handle for rows." },
+    { name: "Friday", focus: "Full Body", type: "full", exercises: [{ name: "Burpees", sets: "3 × 8" },{ name: "Mountain climbers", sets: "3 × 20" },{ name: "Jump squats", sets: "3 × 10" },{ name: "Push-ups", sets: "3 × 10" },{ name: "Plank to downdog", sets: "2 × 10" }], tip: "This is your conditioning day. Move through exercises with 60-second rest between sets." },
+    { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Crunches", sets: "3 × 20" },{ name: "Leg raises", sets: "3 × 10" },{ name: "Bicycle crunches", sets: "3 × 20" },{ name: "Side plank", sets: "2 × 20 sec/side" },{ name: "Dead bug", sets: "3 × 8/side" }], tip: "Dead bugs train anti-rotation stability — a military staple for protecting the lower back under load." },
+    { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest or gentle walk", sets: "—" }], tip: "Rest is where your muscles actually grow. Don't skip it." },
+  ]},
+  { label: "Week 2 — Build", desc: "Increase reps and add new movements. Rest 75 seconds between sets. Your form should feel natural by now.", days: [
+    { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-ups", sets: "4 × 12" },{ name: "Pike push-ups", sets: "3 × 10" },{ name: "Wide push-ups", sets: "3 × 12" },{ name: "Tricep dips", sets: "3 × 12" },{ name: "Staggered push-ups", sets: "2 × 8/side" }], tip: "Staggered push-ups shift load to one side — great for building unilateral shoulder strength." },
+    { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Squats", sets: "4 × 15" },{ name: "Reverse lunges", sets: "3 × 12 each" },{ name: "Step-ups (on chair)", sets: "3 × 12 each" },{ name: "Calf raises", sets: "3 × 20" },{ name: "Plank hold", sets: "3 × 30 sec" }], tip: "Step-ups are a military staple — they mimic loaded movement up stairs or terrain." },
+    { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "25-min brisk walk", sets: "1 round" },{ name: "Full-body stretching", sets: "15 min" }], tip: "Try a slightly longer walk this week. Aim for a pace that gets your heart rate up mildly." },
+    { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Rows (table or bedsheet)", sets: "4 × 10" },{ name: "Superman holds", sets: "3 × 12" },{ name: "Prone Y-T-W raises", sets: "2 × 10 each" },{ name: "Scapular push-ups", sets: "3 × 15" },{ name: "Doorframe bicep curl hold", sets: "3 × 12" }], tip: "Y-T-W raises target all three parts of the rear deltoid — crucial for shoulder health." },
+    { name: "Friday", focus: "Full Body / Cardio", type: "full", exercises: [{ name: "Burpees", sets: "4 × 8" },{ name: "High knees", sets: "3 × 30 sec" },{ name: "Jump squats", sets: "3 × 12" },{ name: "Push-ups", sets: "3 × 12" },{ name: "Mountain climbers", sets: "3 × 20" }], tip: "Try doing this as a circuit with minimal rest to get your heart rate up." },
+    { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Leg raises", sets: "3 × 12" },{ name: "Bicycle crunches", sets: "3 × 25" },{ name: "Side plank", sets: "3 × 25 sec/side" },{ name: "Hollow body hold", sets: "3 × 20 sec" },{ name: "V-ups", sets: "3 × 10" }], tip: "V-ups are a harder hollow body variation — if too tough, do tuck-ups instead." },
+    { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest", sets: "—" }], tip: "Two weeks down. Your body is adapting — you should start to feel stronger." },
+  ]},
+  { label: "Week 3 — Intensity", desc: "Higher volume and timed circuits this week. Rest drops to 60 seconds. Expect to feel challenged.", days: [
+    { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-ups", sets: "4 × 15" },{ name: "Pike push-ups", sets: "4 × 12" },{ name: "Archer push-ups", sets: "3 × 6/side" },{ name: "Tricep dips", sets: "4 × 12" },{ name: "Explosive push-ups", sets: "3 × 6" }], tip: "Archer push-ups shift most of the load to one arm — a big step toward one-arm push-ups." },
+    { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Jump squats", sets: "4 × 12" },{ name: "Bulgarian split squats (rear foot on chair)", sets: "3 × 10 each" },{ name: "Single-leg glute bridges", sets: "3 × 12 each" },{ name: "Plank hold", sets: "3 × 45 sec" },{ name: "Leg raises", sets: "3 × 15" }], tip: "Bulgarian split squats are brutal — start slow and hold something for balance if needed." },
+    { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "30-min walk or light jog", sets: "1 round" },{ name: "Full-body stretching", sets: "15 min" }], tip: "If you're feeling strong, try alternating 1 min jog / 1 min walk for your 30 minutes." },
+    { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Rows (table or bedsheet)", sets: "4 × 12" },{ name: "Superman holds", sets: "4 × 12" },{ name: "Prone Y-T-W raises", sets: "3 × 12 each" },{ name: "Negative pull-up (if bar available)", sets: "3 × 5 slow" }], tip: "Negative pull-ups: jump up to the top position and lower yourself as slowly as possible." },
+    { name: "Friday", focus: "AMRAP Circuit", type: "full", exercises: [{ name: "20-min AMRAP: 10 push-ups, 10 squats, 10 sit-ups, 10 mountain climbers", sets: "As many rounds as possible" }], tip: "AMRAP = As Many Rounds As Possible. Track your rounds — it's your benchmark to beat next week." },
+    { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Hollow body hold", sets: "3 × 30 sec" },{ name: "V-ups", sets: "3 × 15" },{ name: "Side plank", sets: "3 × 35 sec/side" },{ name: "Russian twists", sets: "3 × 20" },{ name: "Dead bug", sets: "3 × 10/side" }], tip: "Russian twists: if too easy, slow them down and pause at each side instead of going heavier." },
+    { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest", sets: "—" }], tip: "Three weeks in. The AMRAP score you set Friday is your fitness baseline." },
+  ]},
+  { label: "Week 4 — Peak", desc: "Maximum effort week. Push for personal bests. Rest 45–60 seconds. Finish strong.", days: [
+    { name: "Monday", focus: "Push", type: "push", exercises: [{ name: "Push-up max test", sets: "1 × max reps" },{ name: "Pike push-ups", sets: "4 × 15" },{ name: "Archer push-ups", sets: "3 × 8/side" },{ name: "Explosive clap push-ups", sets: "3 × 5" },{ name: "Tricep dips", sets: "4 × 15" }], tip: "Start with a max push-up test — this is your Week 1 vs Week 4 comparison. Write it down." },
+    { name: "Tuesday", focus: "Legs & Core", type: "legs", exercises: [{ name: "Squat max reps (2 min)", sets: "1 × timed" },{ name: "Bulgarian split squats", sets: "4 × 12 each" },{ name: "Single-leg glute bridges", sets: "4 × 15 each" },{ name: "Calf raises", sets: "3 × 25" },{ name: "Plank hold max time", sets: "1 × max" }], tip: "Test your plank max — you'll be surprised how much it improved from Week 1." },
+    { name: "Wednesday", focus: "Active Rest", type: "rest", exercises: [{ name: "30-min walk or jog", sets: "1 round" },{ name: "Full-body stretch", sets: "20 min" }], tip: "Extra stretch time today — your body needs it before the final push of the week." },
+    { name: "Thursday", focus: "Pull & Back", type: "pull", exercises: [{ name: "Rows max reps", sets: "1 × max" },{ name: "Superman holds", sets: "4 × 15" },{ name: "Prone Y-T-W raises", sets: "3 × 15 each" },{ name: "Negative pull-ups", sets: "3 × 6 slow" }], tip: "Hit a row max rep test just like Monday's push-up test." },
+    { name: "Friday", focus: "AMRAP Retest", type: "full", exercises: [{ name: "20-min AMRAP: 10 push-ups, 10 squats, 10 sit-ups, 10 mountain climbers", sets: "Beat your Week 3 score" }], tip: "Retest the exact same AMRAP from Week 3. Most people improve by 2–4 rounds in just one week." },
+    { name: "Saturday", focus: "Core", type: "core", exercises: [{ name: "Sit-up max test (2 min)", sets: "1 × timed" },{ name: "Plank hold max", sets: "1 × max" },{ name: "V-ups", sets: "3 × 15" },{ name: "Dead bug", sets: "3 × 12/side" },{ name: "Side plank", sets: "3 × 45 sec/side" }], tip: "The 2-min sit-up test is the official US Army ACFT benchmark. Log your score." },
+    { name: "Sunday", focus: "Full Rest", type: "rest", exercises: [{ name: "Full rest — you earned it", sets: "—" }], tip: "Month complete. Compare your max tests from Week 4 to your starting performance." },
+  ]},
 ];
 
 const badgeClass = { push:'b-push', pull:'b-pull', legs:'b-legs', core:'b-core', rest:'b-rest', full:'b-full' };
 const badgeLabel = { push:'Push', pull:'Pull', legs:'Legs/Core', core:'Core', rest:'Rest', full:'Full Body' };
 
+let currentProfile = null;
 let currentWeek = 0;
+let currentDay = null;
+
+const TOTAL_DAYS = 28;
+
+function storageKey(profile) { return 'mc_progress_' + profile.toLowerCase().replace(/\s+/g,'_'); }
+function profilesKey() { return 'mc_profiles'; }
+
+function getProfiles() {
+  try { return JSON.parse(localStorage.getItem(profilesKey()) || '[]'); } catch(e) { return []; }
+}
+function saveProfiles(p) { localStorage.setItem(profilesKey(), JSON.stringify(p)); }
+
+function getProgress(profile) {
+  try { return JSON.parse(localStorage.getItem(storageKey(profile)) || '{}'); } catch(e) { return {}; }
+}
+function saveProgress(profile, data) { localStorage.setItem(storageKey(profile), JSON.stringify(data)); }
+
+function dayKey(wi, di) { return wi + '_' + di; }
+function exKey(wi, di, ei) { return wi + '_' + di + '_' + ei; }
 
 function getLink(name) {
   if (YT[name] !== undefined) return YT[name];
-  const key = Object.keys(YT).find(k => k && name.toLowerCase().startsWith(k.toLowerCase().split(' ').slice(0,2).join(' ')));
-  return key ? YT[key] : null;
+  return null;
+}
+
+function avatarColor(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+}
+
+function initials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+}
+
+function renderProfileScreen() {
+  document.getElementById('profileScreen').style.display = 'flex';
+  document.getElementById('appScreen').style.display = 'none';
+  const profiles = getProfiles();
+  const list = document.getElementById('profileList');
+  list.innerHTML = '';
+  if (profiles.length === 0) {
+    list.innerHTML = '<div style="font-size:13px;color:var(--text3);text-align:center;padding:8px 0;">No profiles yet — add one below.</div>';
+    return;
+  }
+  profiles.forEach(name => {
+    const prog = getProgress(name);
+    const daysCount = Object.keys(prog).filter(k => k.includes('_') && k.split('_').length === 2 && prog[k] === true).length;
+    const col = avatarColor(name);
+    const btn = document.createElement('button');
+    btn.className = 'profile-btn';
+    btn.innerHTML = `<div class="profile-avatar" style="background:${col.bg};color:${col.text}">${initials(name)}</div><div><div>${name}</div><div class="profile-meta">${daysCount} of 28 days completed</div></div>`;
+    btn.onclick = () => loadProfile(name);
+    list.appendChild(btn);
+  });
+}
+
+function addProfile() {
+  const input = document.getElementById('newProfileName');
+  const name = input.value.trim();
+  if (!name) return;
+  const profiles = getProfiles();
+  if (profiles.includes(name)) { input.value = ''; return; }
+  profiles.push(name);
+  saveProfiles(profiles);
+  input.value = '';
+  renderProfileScreen();
+}
+
+document.getElementById('newProfileName').addEventListener('keydown', e => { if (e.key === 'Enter') addProfile(); });
+
+function loadProfile(name) {
+  currentProfile = name;
+  document.getElementById('profileScreen').style.display = 'none';
+  document.getElementById('appScreen').style.display = 'block';
+  const col = avatarColor(name);
+  document.getElementById('userDot').style.background = col.bg;
+  document.getElementById('userDot').style.color = col.text;
+  document.getElementById('userDot').textContent = initials(name);
+  document.getElementById('userPillName').textContent = name;
+  buildWeekTabs();
+  renderWeek(0);
+  updateOverall();
+}
+
+function switchProfile() {
+  currentProfile = null;
+  currentDay = null;
+  renderProfileScreen();
+}
+
+function buildWeekTabs() {
+  const tabs = document.getElementById('weekTabs');
+  tabs.innerHTML = '';
+  weeks.forEach((w, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'week-btn';
+    btn.innerHTML = `Week ${i+1}<span class="week-done-dot"></span>`;
+    btn.onclick = () => renderWeek(i);
+    tabs.appendChild(btn);
+  });
+}
+
+function updateWeekTabDots() {
+  const prog = getProgress(currentProfile);
+  document.querySelectorAll('.week-btn').forEach((btn, i) => {
+    const anyDone = weeks[i].days.some((_, di) => prog[dayKey(i, di)] === true);
+    btn.classList.toggle('has-progress', anyDone);
+  });
 }
 
 function renderWeek(idx) {
   currentWeek = idx;
+  currentDay = null;
   const week = weeks[idx];
   document.getElementById('weekLabel').textContent = week.label;
   document.getElementById('weekDesc').textContent = week.desc;
   document.querySelectorAll('.week-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
-  const pct = Math.round(((idx+1)/4)*100);
-  document.getElementById('progressLabel').textContent = `Week ${idx+1} of 4`;
-  document.getElementById('progressPct').textContent = pct + '%';
-  document.getElementById('progressFill').style.width = pct + '%';
+  updateWeekTabDots();
 
+  const prog = getProgress(currentProfile);
   const grid = document.getElementById('daysGrid');
   grid.innerHTML = '';
   week.days.forEach((day, di) => {
+    const isDayDone = prog[dayKey(idx, di)] === true;
+    const exDone = day.exercises.filter((_, ei) => prog[exKey(idx, di, ei)] === true).length;
     const card = document.createElement('div');
-    card.className = 'day-card';
-    card.innerHTML = `<div class="day-name">${day.name}</div><div class="day-focus">${day.focus}</div><span class="badge ${badgeClass[day.type]||'b-rest'}">${badgeLabel[day.type]||day.type}</span>`;
+    card.className = 'day-card' + (isDayDone ? ' completed' : '');
+    card.innerHTML = `
+      <div class="day-check"><svg viewBox="0 0 12 12"><polyline points="1,6 4,10 11,2"/></svg></div>
+      <div class="day-name">${day.name}</div>
+      <div class="day-focus">${day.focus}</div>
+      <span class="badge ${badgeClass[day.type]||'b-rest'}">${badgeLabel[day.type]||day.type}</span>
+      ${exDone > 0 && !isDayDone ? `<div class="day-prog">${exDone}/${day.exercises.length} exercises done</div>` : ''}
+    `;
     card.onclick = () => selectDay(di);
     grid.appendChild(card);
   });
-  const panel = document.getElementById('detailPanel');
-  panel.classList.remove('visible');
+  document.getElementById('detailPanel').classList.remove('visible');
 }
 
 function selectDay(di) {
+  currentDay = di;
   const day = weeks[currentWeek].days[di];
+  const prog = getProgress(currentProfile);
+  const isDayDone = prog[dayKey(currentWeek, di)] === true;
+
   document.querySelectorAll('.day-card').forEach((c,i) => c.classList.toggle('selected', i===di));
 
-  const exHTML = day.exercises.map((e, i) => {
+  const exHTML = day.exercises.map((e, ei) => {
+    const checked = prog[exKey(currentWeek, di, ei)] === true;
     const url = getLink(e.name);
-    const linkHTML = url
-      ? `<a class="ex-link" href="${url}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg> how-to</a>`
-      : '';
-    return `<li class="ex-item"><span class="ex-num">${i+1}</span><span class="ex-name">${e.name}</span><span class="ex-sets">${e.sets}</span>${linkHTML}</li>`;
+    const linkHTML = url ? `<a class="ex-link" href="${url}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg> how-to</a>` : '';
+    return `<li class="ex-item">
+      <button class="ex-check-btn ${checked?'checked':''}" onclick="toggleEx(${di},${ei})" aria-label="Mark ${e.name} complete">
+        <svg viewBox="0 0 12 12"><polyline points="1,6 4,10 11,2"/></svg>
+      </button>
+      <span class="ex-name ${checked?'done-ex':''}">${e.name}</span>
+      <span class="ex-sets">${e.sets}</span>
+      ${linkHTML}
+    </li>`;
   }).join('');
 
   const panel = document.getElementById('detailPanel');
   panel.innerHTML = `
     <div class="detail-head">
-      <div><div class="detail-title">${day.name} — ${day.focus}</div><div class="detail-sub">${weeks[currentWeek].label}</div></div>
-      <span class="badge ${badgeClass[day.type]||'b-rest'}">${badgeLabel[day.type]||day.type}</span>
+      <div>
+        <div class="detail-title">${day.name} — ${day.focus}</div>
+        <div class="detail-sub">${weeks[currentWeek].label}</div>
+      </div>
+      <button class="mark-day-btn ${isDayDone?'done':''}" id="markDayBtn" onclick="toggleDay(${di})">
+        ${isDayDone ? '✓ Day complete' : 'Mark day done'}
+      </button>
     </div>
     <ul class="ex-list">${exHTML}</ul>
     <div class="tip-box"><span class="tip-label">Tip: </span>${day.tip}</div>
+    <span class="reset-link" onclick="resetDay(${di})">Reset this day</span>
   `;
   panel.classList.add('visible');
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-const tabs = document.getElementById('weekTabs');
-weeks.forEach((w,i) => {
-  const btn = document.createElement('button');
-  btn.className = 'week-btn' + (i===0?' active':'');
-  btn.textContent = `Week ${i+1}`;
-  btn.onclick = () => renderWeek(i);
-  tabs.appendChild(btn);
-});
-renderWeek(0);
+function toggleEx(di, ei) {
+  const prog = getProgress(currentProfile);
+  const k = exKey(currentWeek, di, ei);
+  prog[k] = !prog[k];
+  saveProgress(currentProfile, prog);
+  updateOverall();
+  selectDay(di);
+  refreshDayCard(di);
+}
+
+function toggleDay(di) {
+  const prog = getProgress(currentProfile);
+  const k = dayKey(currentWeek, di);
+  prog[k] = !prog[k];
+  if (prog[k]) {
+    weeks[currentWeek].days[di].exercises.forEach((_, ei) => { prog[exKey(currentWeek, di, ei)] = true; });
+  }
+  saveProgress(currentProfile, prog);
+  updateOverall();
+  selectDay(di);
+  refreshDayCard(di);
+}
+
+function resetDay(di) {
+  const prog = getProgress(currentProfile);
+  delete prog[dayKey(currentWeek, di)];
+  weeks[currentWeek].days[di].exercises.forEach((_, ei) => { delete prog[exKey(currentWeek, di, ei)]; });
+  saveProgress(currentProfile, prog);
+  updateOverall();
+  selectDay(di);
+  refreshDayCard(di);
+}
+
+function refreshDayCard(di) {
+  const prog = getProgress(currentProfile);
+  const day = weeks[currentWeek].days[di];
+  const isDayDone = prog[dayKey(currentWeek, di)] === true;
+  const exDone = day.exercises.filter((_, ei) => prog[exKey(currentWeek, di, ei)] === true).length;
+  const cards = document.querySelectorAll('.day-card');
+  if (cards[di]) {
+    cards[di].className = 'day-card selected' + (isDayDone ? ' completed' : '');
+    cards[di].querySelector('.day-prog') && (cards[di].querySelector('.day-prog').remove());
+    if (exDone > 0 && !isDayDone) {
+      const d = document.createElement('div');
+      d.className = 'day-prog';
+      d.textContent = `${exDone}/${day.exercises.length} exercises done`;
+      cards[di].appendChild(d);
+    }
+    const chk = cards[di].querySelector('.day-check');
+    if (chk) chk.style.display = isDayDone ? 'flex' : 'none';
+  }
+  updateWeekTabDots();
+}
+
+function updateOverall() {
+  const prog = getProgress(currentProfile);
+  let daysCount = 0, exCount = 0;
+  weeks.forEach((w, wi) => {
+    w.days.forEach((day, di) => {
+      if (prog[dayKey(wi, di)] === true) daysCount++;
+      day.exercises.forEach((_, ei) => { if (prog[exKey(wi, di, ei)] === true) exCount++; });
+    });
+  });
+  const pct = Math.round((daysCount / TOTAL_DAYS) * 100);
+  document.getElementById('overallPct').textContent = pct + '%';
+  document.getElementById('overallFill').style.width = pct + '%';
+  document.getElementById('statDays').textContent = daysCount;
+  document.getElementById('statEx').textContent = exCount;
+}
+
+renderProfileScreen();
 </script>
 </body>
 </html>
