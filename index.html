@@ -21,7 +21,7 @@
     --green-check: #1a6e40; --green-check-bg: #e4f5ec;
     --radius: 10px; --radius-sm: 6px;
   }
-  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; scrollbar-gutter: stable; }
 
   /* PROFILE SCREEN */
   #profileScreen {
@@ -126,7 +126,7 @@
   .week-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 4px; }
   .week-desc { font-size: 14px; color: var(--text2); line-height: 1.6; }
 
-  .days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
+  .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 1.25rem; }
   .day-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); padding: 1rem; cursor: pointer;
@@ -212,7 +212,7 @@
   @media (max-width: 480px) {
     header { padding: 0.875rem 1rem; }
     .main { padding: 1rem 0.75rem 3rem; }
-    .days-grid { grid-template-columns: repeat(2, 1fr); }
+    .days-grid { grid-template-columns: repeat(2, 1fr) !important; }
     .ex-item { flex-wrap: wrap; gap: 6px; }
     .ex-sets { order: 3; }
     .ex-link { order: 4; }
@@ -261,6 +261,16 @@
       <div class="op-stats">
         <div class="op-stat">Days completed: <span id="statDays">0</span> / 28</div>
         <div class="op-stat">Exercises checked: <span id="statEx">0</span></div>
+      </div>
+      <div id="resetAllWrap" style="margin-top:10px;display:none;">
+        <span class="reset-link" style="color:var(--text3);" onclick="confirmResetAll()">Reset all progress and start over</span>
+      </div>
+      <div id="resetConfirm" style="display:none;margin-top:10px;padding:10px 12px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border2);">
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;">Reset all 28 days for <span id="resetProfileName"></span>? This cannot be undone.</div>
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <button class="btn-primary" style="background:#c0392b;border:none;padding:7px 14px;font-size:13px;" onclick="doResetAll()">Yes, reset everything</button>
+          <button class="mark-day-btn" onclick="cancelResetAll()">Cancel</button>
+        </div>
       </div>
     </div>
 
@@ -663,6 +673,26 @@ function updateOverall() {
   document.getElementById('overallFill').style.width = pct + '%';
   document.getElementById('statDays').textContent = daysCount;
   document.getElementById('statEx').textContent = exCount;
+  document.getElementById('resetAllWrap').style.display = daysCount >= TOTAL_DAYS ? 'block' : 'none';
+}
+
+function confirmResetAll() {
+  document.getElementById('resetProfileName').textContent = currentProfile;
+  document.getElementById('resetAllWrap').style.display = 'none';
+  document.getElementById('resetConfirm').style.display = 'block';
+}
+
+function cancelResetAll() {
+  document.getElementById('resetConfirm').style.display = 'none';
+  document.getElementById('resetAllWrap').style.display = 'block';
+}
+
+function doResetAll() {
+  saveProgress(currentProfile, {});
+  document.getElementById('resetConfirm').style.display = 'none';
+  document.getElementById('detailPanel').classList.remove('visible');
+  updateOverall();
+  renderWeek(0);
 }
 
 renderProfileScreen();
